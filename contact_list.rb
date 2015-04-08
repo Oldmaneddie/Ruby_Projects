@@ -1,6 +1,6 @@
 
 
-def ask(question, kind ="string")
+def ask(question, kind ="string") # creates question method for input
   print question + " "
   answer = gets.chomp
   answer = answer.to_i if kind == "number"
@@ -21,8 +21,10 @@ def add_contact
   return contact 
 end
 
-
+# MAIN EXECUTION BLOC ############
 contact_list = []
+
+
 answer = ""
 while answer != "n"
   contact_list.push(add_contact())
