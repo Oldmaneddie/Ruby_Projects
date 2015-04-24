@@ -14,21 +14,37 @@ require 'json'
 # METHODS
 #######################
 
+
+
 #get data from mashable
-def get_from_mashable
+def get_from_digg
+  raw_response = RestClient.get('http://digg.com/api/news/popular.json')
+  response = JSON.load(raw_response)
+
+  response["data"]["feed"].map  do |story|
+    story_hash = {
+      title: story["content"]["title_alt"],
+      score: story["digg_score"]
+
+    }
+  end
+
+
 end
 
-#display adata 
+#display data 
+def display_stories(stories)
 
-def display_stories (search_json)
+  stories.each do |story|
+    puts "Title: #{story[:title]}"
+    puts "Score: #{story[:score]}"
 
+    puts ""
+  end
 end
+ 
+puts "!!! Welcome to the NEWS API Aggregator !!!"
+stories = get_from_digg
+display_stories(stories)
 
 
-
-#######################
-# MAIN PROGRAM BLOC
-#######################
-
-search_json = get_from_mashable
-display_stories = (search_json)
