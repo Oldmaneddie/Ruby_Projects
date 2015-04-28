@@ -13,10 +13,10 @@ require 'json'
 #######################
 # METHODS
 #######################
+#category
 
 
 
-#get data from mashable
 def get_from_digg
   raw_response = RestClient.get('http://digg.com/api/news/popular.json')
   response = JSON.load(raw_response)
@@ -24,6 +24,7 @@ def get_from_digg
   response["data"]["feed"].map  do |story|
     story_hash = {
       title: story["content"]["title_alt"],
+      author: story["content"]["author"],
       score: story["digg_score"]
 
     }
@@ -37,7 +38,9 @@ def display_stories(stories)
 
   stories.each do |story|
     puts "Title: #{story[:title]}"
+    puts "Author: #{story[:author]}"
     puts "Score: #{story[:score]}"
+
 
     puts ""
   end
